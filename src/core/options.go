@@ -37,6 +37,8 @@ func (c *Core) _applyOption(opt SetupOption) (err error) {
 		c.config._allowedPublicKeys[pk] = struct{}{}
 	case GroupPassword:
 		c.config.groupPassword = string(v)
+	case PeerPing:
+		c.config.peerPing = bool(v)
 	}
 	return
 }
@@ -55,6 +57,7 @@ type NodeInfoPrivacy bool
 type AllowedPublicKey ed25519.PublicKey
 type PeerFilter func(net.IP) bool
 type GroupPassword string
+type PeerPing bool
 
 func (a ListenAddress) isSetupOption()    {}
 func (a Peer) isSetupOption()             {}
@@ -63,3 +66,4 @@ func (a NodeInfoPrivacy) isSetupOption()  {}
 func (a AllowedPublicKey) isSetupOption() {}
 func (a PeerFilter) isSetupOption()       {}
 func (a GroupPassword) isSetupOption()    {}
+func (a PeerPing) isSetupOption()         {}

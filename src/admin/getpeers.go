@@ -33,6 +33,10 @@ type PeerEntry struct {
 	TXRate        DataUnit      `json:"rate_sent,omitempty"`
 	Uptime        float64       `json:"uptime,omitempty"`
 	Latency       time.Duration `json:"latency,omitempty"`
+	LinkRTT       int64  `json:"link_rtt_ms,omitempty"`
+	LinkJitter    int64  `json:"link_rtt_jitter_ms,omitempty"`
+	LinkLossPPM   uint64 `json:"link_loss_ppm,omitempty"`
+	LinkPingAge   int64  `json:"link_ping_age_s,omitempty"`
 	LastErrorTime time.Duration `json:"last_error_time,omitempty"`
 	LastError     string        `json:"last_error,omitempty"`
 }
@@ -57,6 +61,10 @@ func (a *AdminSocket) getPeersHandler(req *GetPeersRequest, res *GetPeersRespons
 		if p.Latency > 0 {
 			peer.Latency = p.Latency
 		}
+		peer.LinkRTT = p.LinkRTT.Milliseconds()
+		peer.LinkJitter = p.LinkJitter.Milliseconds()
+		peer.LinkLossPPM = p.LinkLossPPM
+		peer.LinkPingAge = int64(p.LinkPingAge.Seconds())
 		if addr := address.AddrForKey(p.Key); addr != nil {
 			peer.PublicKey = hex.EncodeToString(p.Key)
 			peer.IPAddress = net.IP(addr[:]).String()

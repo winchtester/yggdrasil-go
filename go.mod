@@ -46,3 +46,5 @@ require (
 	github.com/vishvananda/netns v0.0.5 // indirect
 	suah.dev/protect v1.2.4
 )
+
+replace github.com/Arceliar/ironwood => github.com/winchtester/ironwood v0.0.0-20261024210140-02cc0bff6c4f

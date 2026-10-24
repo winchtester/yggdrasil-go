@@ -213,6 +213,9 @@ func main() {
 		}
 		if cfg.GroupPassword != "" {
 			options = append(options, core.GroupPassword(cfg.GroupPassword))
+			if cfg.PeerPing {
+				options = append(options, core.PeerPing(true))
+			}
 		}
 		for intf, peers := range cfg.InterfacePeers {
 			for _, peer := range peers {
